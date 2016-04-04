@@ -5,4 +5,7 @@
     <string name="title_activity_movie">MovieActivity</string>
     <string name="title_activity_remainder">RemainderActivity</string>
     <string name="title_activity_to_do">ToDoActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

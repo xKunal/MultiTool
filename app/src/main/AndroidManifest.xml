@@ -5,12 +5,12 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="MultiTool"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".common.NotepadActivity"
-            android:label="@string/app_name"
+            android:label="MultiTool"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,8 +27,8 @@
             android:label="@string/title_activity_movie"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".reminder.RemainderActivity"
-            android:label="@string/title_activity_remainder"
+            android:name=".reminder.ReminderActivity"
+            android:label="ReminderActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".todo.ToDoActivity"

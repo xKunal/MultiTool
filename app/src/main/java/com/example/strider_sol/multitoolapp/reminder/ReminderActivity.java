@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.example.strider_sol.multitoolapp.R;
 
-public class RemainderActivity extends AppCompatActivity {
+public class ReminderActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

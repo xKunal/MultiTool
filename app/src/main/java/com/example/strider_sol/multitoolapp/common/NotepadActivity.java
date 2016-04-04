@@ -5,20 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-
 
 import com.example.strider_sol.multitoolapp.R;
 import com.example.strider_sol.multitoolapp.drawing.DrawingActivity;
 import com.example.strider_sol.multitoolapp.movie.MovieActivity;
-import com.example.strider_sol.multitoolapp.reminder.RemainderActivity;
+import com.example.strider_sol.multitoolapp.reminder.ReminderActivity;
 import com.example.strider_sol.multitoolapp.todo.ToDoActivity;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -29,7 +27,9 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 
-public class NotepadActivity extends AppCompatActivity {
+public class
+
+        NotepadActivity extends AppCompatActivity {
     private Drawer mDrawer = null;
     private Toolbar mToolbar;
     private int DEFAULT_APP;
@@ -148,11 +148,23 @@ public class NotepadActivity extends AppCompatActivity {
                 startActivity(new Intent(this, MovieActivity.class));
                 break;
             case Constant.REMINDER:
-                startActivity(new Intent(this, RemainderActivity.class));
+                startActivity(new Intent(this, ReminderActivity.class));
                 break;
             case Constant.SETTINGS:
+                openFragment(new SettingsFragment(), "Settings");
                 break;
 
         }
-    }}
+    }
+
+    private void openFragment(Fragment fragment, String screenTitle) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .replace(R.id.container, fragment)
+                .addToBackStack(null)
+                .commit();
+        getSupportActionBar().setTitle(screenTitle);
+    }
+}
 
