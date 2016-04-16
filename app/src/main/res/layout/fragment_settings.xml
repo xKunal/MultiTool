@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary1"
     tools:context="com.example.strider_sol.multitoolapp.common.SettingsFragment">
 
     <LinearLayout
@@ -32,14 +33,15 @@
             android:layout_height="0dp"
             android:layout_margin="10dp"
             android:layout_weight="5"
-            android:background="@color/colorPrimaryLight"
+            android:background="@color/colorAccent"
             android:elevation="2dp">
 
             <RadioGroup
                 android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="20dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/sinere"
                 android:gravity="center_horizontal">
 
                 <RadioButton

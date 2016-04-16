@@ -8,4 +8,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="note_list">note_list</string>
+    <string name="note_not_saved">note_not_saved</string>
+    <string name="note_updated">note_updated</string>
+    <string name="Titleisrequired">Title is required</string>
+    <string name="Contentisrequired">Content is required</string>
 </resources>
