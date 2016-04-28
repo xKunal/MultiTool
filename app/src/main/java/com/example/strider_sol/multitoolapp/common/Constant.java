@@ -10,7 +10,6 @@ public class Constant {
     public static final int REMINDER = 4;
     public static final int MOVIE = 5;
     public static final int SETTINGS = 6;
-
     public static final String PREFERENCE_NAME = "app_preference";
     public static final String DEFAULT_APP = "default_app";
     public static final String NOTE_TABLE = "notes";
@@ -24,4 +23,6 @@ public class Constant {
     public static final String COLUMN_CREATED_TIME = "created_time";
     public static final String LIST_OF_NOTE_ID = "list_of_notes_id";
     public static final String SERIALIZED_NOTES = "serialized_note";
+    public static final String LIST_OF_TODO_ID ="list_of_todo_id" ;
+    public static final String SERIALIZED_TODO_ITEM ="serialized_todo_item" ;
 }

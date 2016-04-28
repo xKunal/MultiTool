@@ -3,7 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_drawing">DrawingActivity</string>
     <string name="title_activity_movie">MovieActivity</string>
-    <string name="title_activity_remainder">RemainderActivity</string>
+    <string name="title_activity_reminder">ReminderActivity</string>
     <string name="title_activity_to_do">ToDoActivity</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -13,4 +13,6 @@
     <string name="note_updated">note_updated</string>
     <string name="Titleisrequired">Title is required</string>
     <string name="Contentisrequired">Content is required</string>
+    <string name="NotesList">Notes List</string>
+    <string name="Settings">Settings</string>
 </resources>

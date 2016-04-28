@@ -29,6 +29,9 @@
     <color name="colorPrimaryLight4">#E1BEE7</color>
     <color name="colorAccent1">#FF5722</color>
     <color name="colorAccent4">#8BC34A</color>
+    <color name="todo_back">#b3e5fc</color>
+    <color name="todo_back_dark">#81d4fa</color>
+
 
 
 </resources>

@@ -135,7 +135,7 @@ NotepadActivity extends AppCompatActivity implements OnStartNewFragmentListener 
     private void onTouchDrawer(int position) {
         switch (position){
             case Constant.NOTEPAD:
-                openFragment(new NoteListFragment(), "Notes List");
+                openFragment(new NoteListFragment(), getString(R.string.NotesList));
                 break;
             case Constant.DRAWING:
                 startActivity(new Intent(this, DrawingActivity.class));
@@ -150,7 +150,7 @@ NotepadActivity extends AppCompatActivity implements OnStartNewFragmentListener 
                 startActivity(new Intent(this, ReminderActivity.class));
                 break;
             case Constant.SETTINGS:
-                openFragment(new SettingsFragment(), "Settings");
+                openFragment(new SettingsFragment(), getString(R.string.Settings));
                 break;
 
         }
