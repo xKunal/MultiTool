@@ -142,27 +142,28 @@ public class ToDoListFragment extends Fragment implements OnStartDragListener, O
         mRecyclerView.setAdapter(mAdapter);
         new GetTodoItemFromDatabaseAsync().execute();
     }
-        @Override
-        public void OnStartDrag(RecyclerView.ViewHolder viewHolder) {
-            mItemTouchHelper.startDrag(viewHolder);
+
+    @Override
+    public void OnStartDrag(RecyclerView.ViewHolder viewHolder) {
+        mItemTouchHelper.startDrag(viewHolder);
+    }
+
+    @Override
+    public void onTodoListItemChanged(List<TodoItem> items) {
+        List<Long> listOfToDoIDs = new ArrayList<Long>();
+
+        for (TodoItem item : items) {
+            listOfToDoIDs.add(item.getId());
         }
-
-        @Override
-        public void onTodoListItemChanged(List<TodoItem> items) {
-            List<Long> listOfToDoIDs = new ArrayList<Long>();
-
-            for (TodoItem item : items) {
-                listOfToDoIDs.add(item.getId());
-            }
 //        convert list of ids into JSON String
-            Gson gson = new Gson();
-            String serializedIds = gson.toJson(listOfToDoIDs);
+        Gson gson = new Gson();
+        String serializedIds = gson.toJson(listOfToDoIDs);
 
-            mEditor.putString(Constant.LIST_OF_TODO_ID, serializedIds).commit();
-        }
+        mEditor.putString(Constant.LIST_OF_TODO_ID, serializedIds).commit();
+    }
 
     private void handleToDoItemClicked(final TodoItem selectedItem) {
-final String[]options = {"Edit","Delete","Check","Web Search"};
+        final String[] options = {"Edit", "Delete", "Check", "Web Search"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
@@ -176,7 +177,7 @@ final String[]options = {"Edit","Delete","Check","Web Search"};
         textView.setText("Choose Options");
 
         ListView dialogList = (ListView) dialogView.findViewById(R.id.dialog_listView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, options);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, options);
         dialogList.setAdapter(adapter);
 
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -216,7 +217,7 @@ final String[]options = {"Edit","Delete","Check","Web Search"};
                         break;
                     case 2:
                         //check was selected
-                        boolean isChecked = selectedItem.isChecked()? false: true;
+                        boolean isChecked = selectedItem.isChecked() ? false : true;
                         selectedItem.setChecked(isChecked);
                         mAdapter.notifyItemChanged(mTodoItems.indexOf(selectedItem));
                         selectedItem.save();
@@ -231,84 +232,85 @@ final String[]options = {"Edit","Delete","Check","Web Search"};
                         break;
                 }
             }
-            });
-        }
+        });
+    }
 
-private void askForConfirmation(final TodoItem selectedItem){
-    final String titleOfTodo = selectedItem.getTitle().toUpperCase();
+    private void askForConfirmation(final TodoItem selectedItem) {
+        final String titleOfTodo = selectedItem.getTitle().toUpperCase();
 
-    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-    alertDialog.setTitle("Delete '" + titleOfTodo + "' ?").setMessage("Are you sure you want to delete '" + titleOfTodo + "' ?");
-    alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            String title = selectedItem.getTitle();
-            Snackbar.make(mRootView, "Todo" + title + "is deleted", Snackbar.LENGTH_SHORT).show();
-            selectedItem.delete();
-            startActivity(new Intent(getActivity(), ToDoActivity.class));
-
-        }
-    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            dialog.dismiss();
-        }
-    });
-    alertDialog.show();
-}
-
-        private class GetTodoItemFromDatabaseAsync extends AsyncTask<Void, Void, List<TodoItem>> {
-            List<TodoItem> todoItemList = new ArrayList<TodoItem>();
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        alertDialog.setTitle("Delete '" + titleOfTodo + "' ?").setMessage("Are you sure you want to delete '" + titleOfTodo + "' ?");
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
-            protected List<TodoItem> doInBackground(Void... params) {
-                //first get list from database
-                todoItemList = TodoItem.listAll(TodoItem.class);
+            public void onClick(DialogInterface dialog, int which) {
+                String title = selectedItem.getTitle();
+                Snackbar.make(mRootView, "Todo" + title + "is deleted", Snackbar.LENGTH_SHORT).show();
+                selectedItem.delete();
+                startActivity(new Intent(getActivity(), ToDoActivity.class));
 
-                // todoItemList = SampleData.getSampleTasks();
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.show();
+    }
 
-                //create an array list of sorted todo items
-                List<TodoItem> sortedTodoItem = new ArrayList<TodoItem>();
+    private class GetTodoItemFromDatabaseAsync extends AsyncTask<Void, Void, List<TodoItem>> {
+        List<TodoItem> todoItemList = new ArrayList<TodoItem>();
 
-                //get the list of id saved in shared preferences
-                String jsonSortedListOfToDoID = mPreferences.getString(Constant.LIST_OF_TODO_ID, "");
+        @Override
+        protected List<TodoItem> doInBackground(Void... params) {
+            //first get list from database
+            todoItemList = TodoItem.listAll(TodoItem.class);
 
-                //make sure this is not null
-                if (!jsonSortedListOfToDoID.isEmpty()) {
-                    //convert the json string to a list of long
-                    Gson gson = new Gson();
-                    List<Long> listOfSortedToDoItemsID = gson.fromJson(jsonSortedListOfToDoID, new TypeToken<List<Long>>() {
-                    }
-                            .getType());
-                    //build the new list
-                    if (listOfSortedToDoItemsID != null && listOfSortedToDoItemsID.size() > 0) {
-                        for (Long id : listOfSortedToDoItemsID) {
-                            for (TodoItem todoItem : todoItemList) {
-                                if (todoItem.getId().equals(id)) {
-                                    sortedTodoItem.add(todoItem);
-                                    todoItemList.remove(todoItem);
-                                    break;
-                                }
+            // todoItemList = SampleData.getSampleTasks();
+
+            //create an array list of sorted todo items
+            List<TodoItem> sortedTodoItem = new ArrayList<TodoItem>();
+
+            //get the list of id saved in shared preferences
+            String jsonSortedListOfToDoID = mPreferences.getString(Constant.LIST_OF_TODO_ID, "");
+
+            //make sure this is not null
+            if (!jsonSortedListOfToDoID.isEmpty()) {
+                //convert the json string to a list of long
+                Gson gson = new Gson();
+                List<Long> listOfSortedToDoItemsID = gson.fromJson(jsonSortedListOfToDoID, new TypeToken<List<Long>>() {
+                }
+                        .getType());
+                //build the new list
+                if (listOfSortedToDoItemsID != null && listOfSortedToDoItemsID.size() > 0) {
+                    for (Long id : listOfSortedToDoItemsID) {
+                        for (TodoItem todoItem : todoItemList) {
+                            if (todoItem.getId().equals(id)) {
+                                sortedTodoItem.add(todoItem);
+                                todoItemList.remove(todoItem);
+                                break;
                             }
                         }
                     }
-                    if (todoItemList.size() > 0) {
-                        sortedTodoItem.addAll(todoItemList);
-                    }
                 }
-                return sortedTodoItem.size() > 0 ? sortedTodoItem : todoItemList;
-            }
-
-            @Override
-            protected void onPostExecute(List<TodoItem> items) {
-                super.onPostExecute(items);
-                for (TodoItem item : items) {
-                    mTodoItems.add(item);
-                    mAdapter.notifyItemInserted(mTodoItems.size() - 1);
+                if (todoItemList.size() > 0) {
+                    sortedTodoItem.addAll(todoItemList);
                 }
             }
+            return sortedTodoItem.size() > 0 ? sortedTodoItem : todoItemList;
         }
 
+        @Override
+        protected void onPostExecute(List<TodoItem> items) {
+            super.onPostExecute(items);
+            for (TodoItem item : items) {
+                mTodoItems.add(item);
+                mAdapter.notifyItemInserted(mTodoItems.size() - 1);
+            }
+        }
     }
+
+}
 
 
 

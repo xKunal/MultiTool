@@ -17,15 +17,16 @@ public class ToDoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
             openFragment(new ToDoListFragment(), "List of Todo");
         }
 
 
     }
+
     private void openFragment(Fragment fragment, String screenTitle) {
         getSupportFragmentManager()
                 .beginTransaction()

@@ -78,7 +78,7 @@ NotepadActivity extends AppCompatActivity implements OnStartNewFragmentListener 
                         new PrimaryDrawerItem().withName("Drawing")
                                 .withIcon(FontAwesome.Icon.faw_paint_brush)
                                 .withIdentifier(3),
-                        new PrimaryDrawerItem().withName("Remainder")
+                        new PrimaryDrawerItem().withName("Reminder")
                                 .withIcon(FontAwesome.Icon.faw_clock_o)
                                 .withIdentifier(4),
                         new PrimaryDrawerItem().withName("Movie")

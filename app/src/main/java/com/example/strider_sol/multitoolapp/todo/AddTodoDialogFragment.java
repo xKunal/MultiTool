@@ -28,7 +28,7 @@ public class AddTodoDialogFragment extends DialogFragment {
     private TextInputEditText mTextInputEditText;
 
     private OnToDoItemAddedListener mListener;
-private boolean isInEditMode = false;
+    private boolean isInEditMode = false;
     private TodoItem mCurrentTodoItem = null;
 
 
@@ -36,9 +36,9 @@ private boolean isInEditMode = false;
         // Required empty public constructor
     }
 
-    public static AddTodoDialogFragment newInstance(String serializedTodo){
+    public static AddTodoDialogFragment newInstance(String serializedTodo) {
         AddTodoDialogFragment fragment = new AddTodoDialogFragment();
-        if (!serializedTodo.isEmpty()){
+        if (!serializedTodo.isEmpty()) {
             Bundle args = new Bundle();
             args.putString(Constant.SERIALIZED_TODO_ITEM, serializedTodo);
             fragment.setArguments(args);
@@ -46,9 +46,13 @@ private boolean isInEditMode = false;
         return fragment;
     }
 
-    public OnToDoItemAddedListener getListener() {return mListener;}
+    public OnToDoItemAddedListener getListener() {
+        return mListener;
+    }
 
-    public void setListener(OnToDoItemAddedListener listener) {mListener = listener;}
+    public void setListener(OnToDoItemAddedListener listener) {
+        mListener = listener;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,8 +62,8 @@ private boolean isInEditMode = false;
 
     private void getToDoItem() {
         Bundle args = getArguments();
-        if (args != null){
-            if (args.containsKey(Constant.SERIALIZED_TODO_ITEM)){
+        if (args != null) {
+            if (args.containsKey(Constant.SERIALIZED_TODO_ITEM)) {
                 String jsonTodoItem = args.getString(Constant.SERIALIZED_TODO_ITEM);
                 Gson gson = new Gson();
                 mCurrentTodoItem = gson.fromJson(jsonTodoItem, TodoItem.class);
@@ -77,7 +81,7 @@ private boolean isInEditMode = false;
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
             LayoutInflater inflater = getActivity().getLayoutInflater();
             final View dialogView = inflater.inflate(R.layout.fragment_add_todo_dialog, null);
 
@@ -90,8 +94,8 @@ private boolean isInEditMode = false;
             builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    if (!mTextInputEditText.getText().toString().isEmpty()){
-                        String todo =mTextInputEditText.getText().toString();
+                    if (!mTextInputEditText.getText().toString().isEmpty()) {
+                        String todo = mTextInputEditText.getText().toString();
                         saveToDoItem(todo);
                         dialog.dismiss();
                     }
@@ -108,7 +112,8 @@ private boolean isInEditMode = false;
 
         return builder.create();
     }
-    private void saveToDoItem(String todo){
+
+    private void saveToDoItem(String todo) {
 
 
         if (!isInEditMode) {
@@ -117,13 +122,13 @@ private boolean isInEditMode = false;
             item.setDateCreated(System.currentTimeMillis());
             item.setDateModified(System.currentTimeMillis());
             item.save();
-            Toast.makeText(getContext(),todo +"has been added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), todo + "has been added", Toast.LENGTH_SHORT).show();
             mListener.OnToDoItemAdded(item);
         } else {
             mCurrentTodoItem.setDateModified(System.currentTimeMillis());
             String newTitle = mTextInputEditText.getText().toString().trim();
             mCurrentTodoItem.setTitle(newTitle);
-            Toast.makeText(getContext(),"'"+newTitle.toUpperCase()+"' has been updated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "'" + newTitle.toUpperCase() + "' has been updated", Toast.LENGTH_SHORT).show();
             mCurrentTodoItem.save();
             mListener.OnToDoItemAdded(mCurrentTodoItem);
         }
@@ -132,10 +137,13 @@ private boolean isInEditMode = false;
     @Override
     public void onResume() {
         super.onResume();
-        if (isInEditMode){
+        if (isInEditMode) {
             populateToDoItem();
         }
     }
-    private void populateToDoItem(){ mTextInputEditText.setText(mCurrentTodoItem.getTitle());}
+
+    private void populateToDoItem() {
+        mTextInputEditText.setText(mCurrentTodoItem.getTitle());
+    }
 }
 
